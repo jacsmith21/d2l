@@ -2,7 +2,7 @@ package ca.unb.qualifiers.controller;
 
 import ca.unb.qualifiers.exception.BadRequestException;
 import ca.unb.qualifiers.model.Course;
-import ca.unb.qualifiers.model.Submission;
+import ca.unb.qualifiers.model.Deliverable;
 import ca.unb.qualifiers.model.Upload;
 import ca.unb.qualifiers.model.User;
 import ca.unb.qualifiers.repository.CourseRepository;
@@ -14,12 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,8 +28,8 @@ import java.security.Principal;
 
 @Controller
 @EnableAutoConfiguration
-public class SubmissionController {
-    private static final Logger LOG = LoggerFactory.getLogger(SubmissionController.class);
+public class DeliverableController {
+    private static final Logger LOG = LoggerFactory.getLogger(DeliverableController.class);
 
     @Autowired
     UserRepository userRepository;
@@ -47,21 +46,21 @@ public class SubmissionController {
     @Autowired
     SubmissionRepository submissionRepository;
 
-    @PostMapping("/submissions/{submissionId}")
+    @PostMapping("/deliverables/{submissionId}")
     @ResponseBody
     public String uploadSubmission(@PathVariable Integer submissionId, @RequestParam("file") MultipartFile file, Principal principal) {
         LOG.info("uploadSubmission - starting - file.name: {}", file.getOriginalFilename());
 
         User student = userRepository.findByUsername(principal.getName());
 
-        Submission submission = submissionRepository.findOne(submissionId);
-        Course course = submission.getCourse();
+        Deliverable deliverable = submissionRepository.findOne(submissionId);
+        Course course = deliverable.getCourse();
         if(!student.inCourse(course)) {
             throw new BadRequestException();
         }
 
         try {
-            submissionService.add(submission, file);
+            submissionService.add(deliverable, file);
         } catch (IOException e) {
             LOG.error("can't store the file : {}", e);
             throw new BadRequestException();
@@ -84,9 +83,9 @@ public class SubmissionController {
         return new ResponseEntity<>(upload.getData(), headers, HttpStatus.OK);
     }
 
-    @GetMapping("/submissions/{submissionId}")
+    @GetMapping("/deliverables/{deliverableId}")
     @ResponseBody
-    public Iterable<Submission> getSubmissions() {
+    public Iterable<Deliverable> getSubmissions(@PathVariable Integer deliverableId) {
         LOG.debug("getSubmissions - starting");
         return submissionService.loadAll();
     }

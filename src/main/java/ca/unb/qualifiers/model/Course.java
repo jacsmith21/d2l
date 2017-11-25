@@ -18,7 +18,7 @@ public class Course {
     private User instructor;
 
     @OneToMany(mappedBy = "course")
-    private List<Submission> submissions;
+    private List<Deliverable> deliverables;
 
     public Integer getId() {
         return id;
@@ -60,13 +60,13 @@ public class Course {
         this.instructor = instructor;
     }
 
-    public boolean hasSubmission(Submission submission) {
-        if(submissions == null) {
+    public boolean hasSubmission(Deliverable deliverable) {
+        if(deliverables == null) {
             return false;
         }
 
-        for(Submission s : submissions) {
-            if(submission.getId().equals(s.getId())) {
+        for(Deliverable s : deliverables) {
+            if(deliverable.getId().equals(s.getId())) {
                 return true;
             }
         }
