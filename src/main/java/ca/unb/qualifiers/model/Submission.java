@@ -11,6 +11,7 @@ public class Submission {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+    private byte[] data;
 
     public Integer getId() {
         return id;
@@ -26,5 +27,13 @@ public class Submission {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
     }
 }
