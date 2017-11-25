@@ -16,15 +16,17 @@
                <th></th>
            </tr>
         </thead>
+        {% for deliverable in deliverables %}
+        <form method="post" action="/deliverables/{{ deliverable.id }}" id="form-{{ deliverable.id }}" enctype="multipart/form-data"></form>
+        {% endfor %}
+        
         <tbody>
             {% for deliverable in deliverables %}
-                <form method="post" action="/deliverables/{{ deliverable.id }}" enctype="multipart/form-data">
-                    <tr>
-                        <td>{{deliverable.name}}</td>
-                        <td><input type="file" name="file" size="50" class="btn blue-gradient btn-block btn-rounded z-depth-1a">Choose File</input></td>
-                        <td><input type="submit" value="Upload" class="btn blue-gradient btn-block btn-rounded z-depth-1a"/></td>
-                    </tr>
-                </form>
+                <tr>
+                    <td>{{deliverable.name}}</td>
+                    <td><input type="file" name="file" size="50" class="btn blue-gradient btn-block btn-rounded z-depth-1a" form="form-{{ deliverable.id }}">Choose File</input></td>
+                    <td><input type="submit" value="Upload" class="btn blue-gradient btn-block btn-rounded z-depth-1a" form="form-{{ deliverable.id }}"/></td>
+                </tr>
             {% endfor %}
         </tbody>
     </table>
