@@ -1,6 +1,7 @@
 package ca.unb.qualifiers.controller;
 
 import ca.unb.qualifiers.model.Course;
+import ca.unb.qualifiers.model.Upload;
 import ca.unb.qualifiers.model.User;
 import ca.unb.qualifiers.repository.CourseRepository;
 import ca.unb.qualifiers.repository.UserRepository;
@@ -32,9 +33,8 @@ public class CourseController {
         if (!principal.getName().equals(username)) {
             return "404";
         }
-
         Course course = courseRepository.findByName(coursename);
-
+        
 
         return "course";
     }
