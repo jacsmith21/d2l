@@ -1,4 +1,4 @@
-package ca.unb.qualifiers;
+package ca.unb.qualifiers.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
