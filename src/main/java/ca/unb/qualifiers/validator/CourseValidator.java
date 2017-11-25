@@ -28,10 +28,6 @@ public class CourseValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Course course = (Course) o;
 
-        if (course.getId() == null && !courseRepository.findByInstructorUsernameAndNameAndSection(course.getInstructor().getUsername(), course.getName(), course.getSection()).isEmpty()) {
-            errors.rejectValue("name", "This section for this course already exists.");
-        }
-
         if (course.getName() == null || course.getName().isEmpty()) {
             errors.rejectValue("name", "Ensure all required fields are filled. (Check Course Name)");
         } else if (course.getName().length() > 10) {
