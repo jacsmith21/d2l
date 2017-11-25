@@ -1,6 +1,5 @@
 package ca.unb.qualifiers.repository;
 
-import ca.unb.qualifiers.model.Submission;
 import ca.unb.qualifiers.model.Upload;
 import org.springframework.data.repository.CrudRepository;
 
