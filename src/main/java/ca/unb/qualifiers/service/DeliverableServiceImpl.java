@@ -4,6 +4,7 @@ import ca.unb.qualifiers.exception.InternalServerErrorException;
 import ca.unb.qualifiers.exception.NotFoundException;
 import ca.unb.qualifiers.model.Deliverable;
 import ca.unb.qualifiers.model.Upload;
+import ca.unb.qualifiers.model.User;
 import ca.unb.qualifiers.repository.DeliverableRepository;
 import org.aspectj.weaver.ast.Not;
 import org.slf4j.Logger;
@@ -23,10 +24,11 @@ public class DeliverableServiceImpl implements DeliverableService {
     DeliverableRepository deliverableRepository;
 
     @Override
-    public void add(Deliverable deliverable, MultipartFile file) throws IOException {
+    public void add(Deliverable deliverable, User student, MultipartFile file) throws IOException {
         Upload upload = new Upload();
         upload.setName(file.getOriginalFilename());
         upload.setData(file.getBytes());
+        upload.setStudent(student);
 
         deliverable.getUploads().add(upload);
         deliverableRepository.save(deliverable);

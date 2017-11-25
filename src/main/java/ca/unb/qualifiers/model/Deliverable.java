@@ -10,7 +10,7 @@ public class Deliverable {
     private Integer id;
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "deliverable")
     private List<Upload> uploads;
 
     @ManyToOne

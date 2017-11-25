@@ -18,7 +18,7 @@ public class Upload {
     private User student;
 
     @ManyToOne
-    private Course course;
+    private Deliverable deliverable;
 
     public Integer getId() {
         return id;
@@ -58,14 +58,6 @@ public class Upload {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
 
     public String getExtension() {

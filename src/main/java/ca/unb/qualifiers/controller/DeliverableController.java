@@ -45,21 +45,21 @@ public class DeliverableController {
     @Autowired
     DeliverableRepository deliverableRepository;
 
-    @PostMapping("/deliverables/{submissionId}")
+    @PostMapping("/deliverables/{deliverableId}")
     @ResponseBody
-    public String uploadSubmission(@PathVariable Integer submissionId, @RequestParam("file") MultipartFile file, Principal principal) {
+    public String uploadSubmission(@PathVariable Integer deliverableId, @RequestParam("file") MultipartFile file, Principal principal) {
         LOG.info("uploadSubmission - starting - file.name: {}", file.getOriginalFilename());
 
         User student = userRepository.findByUsername(principal.getName());
 
-        Deliverable deliverable = deliverableRepository.findOne(submissionId);
+        Deliverable deliverable = deliverableRepository.findOne(deliverableId);
         Course course = deliverable.getCourse();
         if(!student.inCourse(course)) {
             throw new BadRequestException();
         }
 
         try {
-            deliverableService.add(deliverable, file);
+            deliverableService.add(deliverable, student, file);
         } catch (IOException e) {
             LOG.error("can't store the file : {}", e);
             throw new BadRequestException();
