@@ -1,9 +1,6 @@
 package ca.unb.qualifiers.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Submission {
@@ -11,6 +8,8 @@ public class Submission {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+
+    @Column(length=2147483647)
     private byte[] data;
 
     public Integer getId() {

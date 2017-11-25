@@ -2,6 +2,8 @@ package ca.unb.qualifiers.controller;
 
 import ca.unb.qualifiers.model.User;
 import ca.unb.qualifiers.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import java.security.Principal;
 @Controller
 @EnableAutoConfiguration
 public class UserController {
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     UserRepository userRepository;
@@ -44,6 +47,8 @@ public class UserController {
 
     @GetMapping(path = "/{username}")
     public String dashboard(ModelMap map, Principal principal, @PathVariable String username) {
+        LOG.info("dashboard - starting");
+
         if (!principal.getName().equals(username)) {
             return "404";
         }

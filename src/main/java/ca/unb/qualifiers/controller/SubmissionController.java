@@ -5,6 +5,8 @@ import ca.unb.qualifiers.model.Submission;
 import ca.unb.qualifiers.model.User;
 import ca.unb.qualifiers.repository.SubmissionRepository;
 import ca.unb.qualifiers.service.SubmissionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.io.ByteArrayResource;
@@ -24,6 +26,7 @@ import java.nio.file.Files;
 @Controller
 @EnableAutoConfiguration
 public class SubmissionController {
+    private static final Logger LOG = LoggerFactory.getLogger(SubmissionController.class);
 
     @Autowired
     SubmissionRepository submissionRepository;
@@ -31,12 +34,14 @@ public class SubmissionController {
     @Autowired
     SubmissionService submissionService;
 
-    @PostMapping
+    @PostMapping("/submissions")
     @ResponseBody
-    public String uploadSubmission(@RequestParam MultipartFile file) {
+    public String uploadSubmission(@RequestParam("file") MultipartFile file) {
+        LOG.info("uploadSubmission - starting - file.name: {}", file.getOriginalFilename());
         try {
             submissionService.store(file);
         } catch (IOException e) {
+            LOG.error("cant store the file : {}", e);
             throw new BadRequestException();
         }
         return "success";
@@ -46,6 +51,8 @@ public class SubmissionController {
     @GetMapping(value = "/submissions/{filename:.+}")
     @ResponseBody
     public ResponseEntity<byte[]> getSubmission(@PathVariable  String filename) {
+        LOG.info("getSubmissions - starting - filename {}", filename);
+
         Submission submission = submissionService.load(filename);
 
         HttpHeaders headers = new HttpHeaders();
@@ -60,6 +67,8 @@ public class SubmissionController {
     @GetMapping("/submissions")
     @ResponseBody
     public Iterable<Submission> getSubmissions() {
+        LOG.debug("getSubmissions - starting");
+
         return submissionService.loadAll();
     }
 }
