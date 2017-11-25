@@ -1,18 +1,23 @@
 package ca.unb.qualifiers.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    private String email;
     private String username;
     private boolean instructor;
     private String password;
+
+    @OneToMany(mappedBy = "instructor", fetch = FetchType.EAGER)
+    private List<Course> createdCourses;
+
+    @ManyToMany(mappedBy = "students")
+    private List<Course> enrolledCourses;
 
     public Integer getId() {
         return id;
@@ -20,6 +25,14 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -44,5 +57,21 @@ public class User {
 
     public void isInstructor(Boolean instructor) {
         this.instructor = instructor;
+    }
+
+    public List<Course> getEnrolledCourses() {
+        return enrolledCourses;
+    }
+
+    public void setEnrolledCourses(List<Course> enrolledCourses) {
+        this.enrolledCourses = enrolledCourses;
+    }
+
+    public List<Course> getCreatedCourses() {
+        return createdCourses;
+    }
+
+    public void setCreatedCourses(List<Course> createdCourses) {
+        this.createdCourses = createdCourses;
     }
 }
