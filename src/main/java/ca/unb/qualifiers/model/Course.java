@@ -73,4 +73,12 @@ public class Course {
 
         return false;
     }
+
+    public List<Deliverable> getDeliverables() {
+        return deliverables;
+    }
+
+    public void setDeliverables(List<Deliverable> deliverables) {
+        this.deliverables = deliverables;
+    }
 }

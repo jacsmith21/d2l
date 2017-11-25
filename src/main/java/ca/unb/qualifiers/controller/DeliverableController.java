@@ -74,6 +74,7 @@ public class DeliverableController {
 
         Upload upload = uploadRepository.findOne(uploadId);
 
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/pdf"));
         headers.setContentDispositionFormData(upload.getName(), upload.getName());
