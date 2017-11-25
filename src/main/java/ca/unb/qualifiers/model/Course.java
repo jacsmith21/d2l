@@ -17,6 +17,9 @@ public class Course {
     @ManyToOne
     private User instructor;
 
+    @OneToMany(mappedBy = "course")
+    private List<Submission> submissions;
+
     public Integer getId() {
         return id;
     }
@@ -55,5 +58,19 @@ public class Course {
 
     public void setInstructor(User instructor) {
         this.instructor = instructor;
+    }
+
+    public boolean hasSubmission(Submission submission) {
+        if(submissions == null) {
+            return false;
+        }
+
+        for(Submission s : submissions) {
+            if(submission.getId().equals(s.getId())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

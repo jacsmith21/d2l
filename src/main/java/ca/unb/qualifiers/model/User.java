@@ -1,5 +1,8 @@
 package ca.unb.qualifiers.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,10 +20,15 @@ public class User {
     private String passwordConfirm;
 
     @OneToMany(mappedBy = "instructor", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Course> createdCourses;
 
-    @ManyToMany(mappedBy = "students")
+    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Course> enrolledCourses;
+
+    @OneToMany(mappedBy = "student")
+    private List<Upload> uploads;
 
     public Integer getId() {
         return id;
@@ -84,5 +92,19 @@ public class User {
 
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
+    }
+
+    public boolean inCourse(Course course) {
+        if(enrolledCourses == null) {
+            return false;
+        }
+
+        for(Course c : enrolledCourses) {
+            if(c.getId().equals(course.getId())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -1,17 +1,21 @@
 package ca.unb.qualifiers.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 
 @Entity
-public class Submission {
+public class Upload {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
+    private Date date;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Upload> uploads;
+    @Column(length=2147483647)
+    private byte[] data;
+
+    @ManyToOne
+    private User student;
 
     @ManyToOne
     private Course course;
@@ -24,6 +28,22 @@ public class Submission {
         this.id = id;
     }
 
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+
+    public User getStudent() {
+        return student;
+    }
+
+    public void setStudent(User student) {
+        this.student = student;
+    }
+
     public String getName() {
         return name;
     }
@@ -32,12 +52,12 @@ public class Submission {
         this.name = name;
     }
 
-    public List<Upload> getUploads() {
-        return uploads;
+    public Date getDate() {
+        return date;
     }
 
-    public void setUploads(List<Upload> uploads) {
-        this.uploads = uploads;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Course getCourse() {
