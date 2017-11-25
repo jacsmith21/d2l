@@ -1,5 +1,6 @@
 package ca.unb.qualifiers.controller;
 
+import ca.unb.qualifiers.model.Course;
 import ca.unb.qualifiers.model.User;
 import ca.unb.qualifiers.repository.UserRepository;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @EnableAutoConfiguration
@@ -52,8 +54,12 @@ public class UserController {
         if (!principal.getName().equals(username)) {
             return "404";
         }
+
         User user = userRepository.findByUsername(username);
+        List<Course> courses = user.getEnrolledCourses();
         map.addAttribute("user", user);
+        map.addAttribute("courses", courses);
+
         return "dashboard";
     }
 }

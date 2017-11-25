@@ -1,0 +1,10 @@
+#courses-block {
+    margin: 40px;
+}
+
+#class-card {
+    width: 250px;
+    margin: 5px;
+    display: inline-block;
+    float: left;
+}

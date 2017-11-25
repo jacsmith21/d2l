@@ -5,4 +5,5 @@ import ca.unb.qualifiers.model.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface CourseRepository extends CrudRepository<Course, Integer> {
+    Course findByName(String name);
 }
