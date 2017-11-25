@@ -1,0 +1,5 @@
+{% extends 'dashboard.twig' %}
+
+{% block title %}
+    <title>TITLE</title>
+{% endblock %}
