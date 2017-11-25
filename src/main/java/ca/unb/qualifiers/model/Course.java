@@ -13,5 +13,15 @@ public class Course {
 
     @ManyToMany(mappedBy = "enrolledCourses")
     private List<User> students;
+
+    @ManyToOne
     private User instructor;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

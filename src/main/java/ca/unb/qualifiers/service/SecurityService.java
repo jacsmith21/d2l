@@ -1,7 +1,7 @@
 package ca.unb.qualifiers.service;
 
 
-public interface SecurityService {
+public interface SecurityService{
 
     String findLoggedInUsername();
 
