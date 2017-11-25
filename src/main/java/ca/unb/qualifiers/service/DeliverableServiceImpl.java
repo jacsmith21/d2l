@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -29,6 +30,8 @@ public class DeliverableServiceImpl implements DeliverableService {
         upload.setName(file.getOriginalFilename());
         upload.setData(file.getBytes());
         upload.setStudent(student);
+        upload.setDate(new Date(new java.util.Date().getTime()));
+        upload.setDeliverable(deliverable);
 
         deliverable.getUploads().add(upload);
         deliverableRepository.save(deliverable);

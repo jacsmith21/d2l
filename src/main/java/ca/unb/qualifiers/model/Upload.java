@@ -63,4 +63,12 @@ public class Upload {
     public String getExtension() {
         return name.substring(name.indexOf("."));
     }
+
+    public Deliverable getDeliverable() {
+        return deliverable;
+    }
+
+    public void setDeliverable(Deliverable deliverable) {
+        this.deliverable = deliverable;
+    }
 }

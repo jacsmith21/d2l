@@ -46,7 +46,6 @@ public class DeliverableController {
     DeliverableRepository deliverableRepository;
 
     @PostMapping("/deliverables/{deliverableId}")
-    @ResponseBody
     public String uploadSubmission(@PathVariable Integer deliverableId, @RequestParam("file") MultipartFile file, Principal principal) {
         LOG.info("uploadSubmission - starting - file.name: {}", file.getOriginalFilename());
 
@@ -64,7 +63,7 @@ public class DeliverableController {
             LOG.error("can't store the file : {}", e);
             throw new BadRequestException();
         }
-        return "success";
+        return "redirect:/" + student.getUsername() + "/" + course.getName();
     }
 
     @GetMapping(value = "/uploads/{uploadId}")
