@@ -11,7 +11,7 @@ public class Course {
     private String name;
     private String section;
 
-    @ManyToMany()
+    @ManyToMany
     private List<User> students;
 
     @ManyToOne

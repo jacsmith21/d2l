@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/login/success")
-    public String loginSucess(Principal principal) {
+    public String loginSuccess(Principal principal) {
         return "redirect:/" + principal.getName();
     }
 
