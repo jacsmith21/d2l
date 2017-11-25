@@ -56,7 +56,14 @@ public class UserController {
         }
 
         User user = userRepository.findByUsername(username);
-        List<Course> courses = user.getEnrolledCourses();
+
+        List<Course> courses = null;
+        if(user.isInstructor()) {
+            courses = user.getCreatedCourses();
+        } else {
+            courses = user.getEnrolledCourses();
+        }
+
         map.addAttribute("user", user);
         map.addAttribute("courses", courses);
 
