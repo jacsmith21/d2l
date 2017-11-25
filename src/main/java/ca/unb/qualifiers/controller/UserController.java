@@ -16,9 +16,13 @@ public class UserController {
     UserRepository userRepository;
 
     @GetMapping("/")
-    @ResponseBody
     public String index() {
-        return "Hey!";
+        return "index";
+    }
+
+    @GetMapping
+    public String dashboard() {
+        return "dashboard";
     }
 
     @GetMapping("/users")

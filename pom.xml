@@ -66,12 +66,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.jtwig</groupId>
-			<artifactId>jtwig-spring-boot-starter</artifactId>
-			<version>${jtwig.version}</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 			<version>${assertj.java8.version}</version>
@@ -97,6 +91,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.jtwig</groupId>
+			<artifactId>jtwig-spring-boot-starter</artifactId>
+			<version>${jtwig.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+        </dependency>
+
+        <dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${apache.version}</version>
