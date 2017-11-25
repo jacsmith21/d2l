@@ -17,14 +17,16 @@
                <tr>
                    <th>Deliverable</th>
                    <th>Student</th>
+                   <th>Filename</th>
                    <th></th>
                </tr>
            </thead>
             <tbody>
                 {% for upload in uploads %}
                     <tr>
-                        <td>{{upload.name}}</td>
-                        <td>{{ upload.deliverable.name }}</td>
+                        <td>{{upload.deliverable.name}}</td>
+                        <td>{{ upload.student.username }}</td>
+                        <td>{{ upload.name }}</td>
                         <td style="float:right;">
                             <button class="btn btn-outline-success btn-sm my-0"  type="submit" form="download-{{ upload.id }}">Download Files</button>
                         </td>
