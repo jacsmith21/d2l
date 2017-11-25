@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @EnableAutoConfiguration
-public class QualifiersController {
+public class UserController {
+
     @Autowired
     UserRepository userRepository;
 
