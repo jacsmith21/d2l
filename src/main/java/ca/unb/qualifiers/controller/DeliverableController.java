@@ -6,10 +6,10 @@ import ca.unb.qualifiers.model.Deliverable;
 import ca.unb.qualifiers.model.Upload;
 import ca.unb.qualifiers.model.User;
 import ca.unb.qualifiers.repository.CourseRepository;
-import ca.unb.qualifiers.repository.SubmissionRepository;
+import ca.unb.qualifiers.repository.DeliverableRepository;
 import ca.unb.qualifiers.repository.UploadRepository;
 import ca.unb.qualifiers.repository.UserRepository;
-import ca.unb.qualifiers.service.SubmissionService;
+import ca.unb.qualifiers.service.DeliverableService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,10 +40,10 @@ public class DeliverableController {
     UploadRepository uploadRepository;
 
     @Autowired
-    SubmissionService submissionService;
+    DeliverableService deliverableService;
 
     @Autowired
-    SubmissionRepository submissionRepository;
+    DeliverableRepository deliverableRepository;
 
     @PostMapping("/deliverables/{submissionId}")
     @ResponseBody
@@ -53,14 +52,14 @@ public class DeliverableController {
 
         User student = userRepository.findByUsername(principal.getName());
 
-        Deliverable deliverable = submissionRepository.findOne(submissionId);
+        Deliverable deliverable = deliverableRepository.findOne(submissionId);
         Course course = deliverable.getCourse();
         if(!student.inCourse(course)) {
             throw new BadRequestException();
         }
 
         try {
-            submissionService.add(deliverable, file);
+            deliverableService.add(deliverable, file);
         } catch (IOException e) {
             LOG.error("can't store the file : {}", e);
             throw new BadRequestException();
@@ -87,6 +86,6 @@ public class DeliverableController {
     @ResponseBody
     public Iterable<Deliverable> getSubmissions(@PathVariable Integer deliverableId) {
         LOG.debug("getSubmissions - starting");
-        return submissionService.loadAll();
+        return deliverableService.loadAll();
     }
 }

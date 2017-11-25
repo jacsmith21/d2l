@@ -4,7 +4,7 @@ import ca.unb.qualifiers.exception.InternalServerErrorException;
 import ca.unb.qualifiers.exception.NotFoundException;
 import ca.unb.qualifiers.model.Deliverable;
 import ca.unb.qualifiers.model.Upload;
-import ca.unb.qualifiers.repository.SubmissionRepository;
+import ca.unb.qualifiers.repository.DeliverableRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,11 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-public class SubmissionServiceImpl implements SubmissionService {
-    private static final Logger LOG = LoggerFactory.getLogger(SubmissionServiceImpl.class);
+public class DeliverableServiceImpl implements DeliverableService {
+    private static final Logger LOG = LoggerFactory.getLogger(DeliverableServiceImpl.class);
 
     @Autowired
-    SubmissionRepository submissionRepository;
+    DeliverableRepository deliverableRepository;
 
     @Override
     public void add(Deliverable deliverable, MultipartFile file) throws IOException {
@@ -28,12 +28,12 @@ public class SubmissionServiceImpl implements SubmissionService {
         upload.setData(file.getBytes());
 
         deliverable.getUploads().add(upload);
-        submissionRepository.save(deliverable);
+        deliverableRepository.save(deliverable);
     }
 
     @Override
     public Deliverable load(String filename) {
-        List<Deliverable> deliverables = submissionRepository.findByName(filename);
+        List<Deliverable> deliverables = deliverableRepository.findByName(filename);
         if(deliverables.size() == 0) {
             LOG.warn("there are no files named {}", filename);
             throw new NotFoundException();

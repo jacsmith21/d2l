@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface SubmissionRepository extends CrudRepository<Deliverable, Integer> {
+public interface DeliverableRepository extends CrudRepository<Deliverable, Integer> {
     List<Deliverable> findByName(String name);
 }
