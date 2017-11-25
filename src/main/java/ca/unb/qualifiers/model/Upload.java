@@ -67,4 +67,8 @@ public class Upload {
     public void setCourse(Course course) {
         this.course = course;
     }
+
+    public String getExtension() {
+        return name.substring(name.indexOf("."));
+    }
 }
