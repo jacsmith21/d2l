@@ -13,6 +13,9 @@ public class User {
     private boolean instructor;
     private String password;
 
+    @Transient
+    private String passwordConfirm;
+
     @OneToMany(mappedBy = "instructor", fetch = FetchType.EAGER)
     private List<Course> createdCourses;
 
@@ -73,5 +76,13 @@ public class User {
 
     public void setCreatedCourses(List<Course> createdCourses) {
         this.createdCourses = createdCourses;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 }
