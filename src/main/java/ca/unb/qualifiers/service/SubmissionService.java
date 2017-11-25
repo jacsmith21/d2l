@@ -7,7 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 public interface SubmissionService {
-    void store(MultipartFile file) throws IOException;
     Submission load(String filename);
     Iterable<Submission> loadAll();
+    void add(Submission submission, MultipartFile file) throws IOException;
 }
