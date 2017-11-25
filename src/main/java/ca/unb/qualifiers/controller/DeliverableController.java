@@ -73,20 +73,31 @@ public class DeliverableController {
         LOG.info("getUpload - starting - uploadId {}", uploadId);
 
         Upload upload = uploadRepository.findOne(uploadId);
+        String extension = upload.getExtension();
 
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        if(extension.equals(".pdf")) {
+            headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        } else if(extension.equals(".zip")) {
+            headers.setContentType(MediaType.parseMediaType("application/zip"));
+        } else {
+            headers.setContentType(MediaType.parseMediaType("text/plain"));
+        }
+
         headers.setContentDispositionFormData(upload.getName(), upload.getName());
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
         return new ResponseEntity<>(upload.getData(), headers, HttpStatus.OK);
     }
 
-    @GetMapping("/deliverables/{deliverableId}")
+    @GetMapping("/deliverables/{deliverableId}/uploads")
     @ResponseBody
-    public Iterable<Deliverable> getSubmissions(@PathVariable Integer deliverableId) {
-        LOG.debug("getSubmissions - starting");
-        return deliverableService.loadAll();
+    public Iterable<Upload> getUploads(@PathVariable Integer deliverableId) {
+        LOG.debug("getUploads - starting - deliverableId: {}", deliverableId);
+
+        Iterable<Upload> uploads = deliverableService.loadAll(deliverableId);
+
+        return uploads;
     }
 }

@@ -5,6 +5,7 @@ import ca.unb.qualifiers.exception.NotFoundException;
 import ca.unb.qualifiers.model.Deliverable;
 import ca.unb.qualifiers.model.Upload;
 import ca.unb.qualifiers.repository.DeliverableRepository;
+import org.aspectj.weaver.ast.Not;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,16 @@ public class DeliverableServiceImpl implements DeliverableService {
     @Override
     public Iterable<Deliverable> loadAll() {
         return null;
+    }
+
+    @Override
+    public Iterable<Upload> loadAll(Integer deliverableId) {
+        Deliverable deliverable = deliverableRepository.findOne(deliverableId);
+
+        if(deliverable == null) {
+            throw new NotFoundException();
+        }
+
+        return deliverable.getUploads();
     }
 }
