@@ -1,19 +1,32 @@
 {% extends 'base.twig' %}
 
 {% block title %}
-    <title>TITLE</title>
+    <title>D2L++</title>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="static/css/dashboard.css"/>
 {% endblock %}
 
 {% block body %}
-<form method="post" action="submissions" enctype="multipart/form-data">
-    <table border="0">
-        <tr>
-            <td>Pick file #1:</td>
-            <td><input type="file" name="file" size="50" /></td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><input type="submit" value="Upload" /></td>
-        </tr>
-    </table>
-</form>
-{% endblock %}
+    <nav class="navbar navbar-dark justify-content-between">
+        <a href="/{{ user.username }}" class="navbar-brand" style="font-size: 20pt; color:#4285f4;">D2L++</a>
+        <div class="float-right">
+        <button class="btn btn-outline-success btn-sm my-0" onclick="location.href='/logout'">Logout</button>
+        </div>
+    </nav>
+    <div id="courses-block">
+        {% for course in courses %}
+            <div id="class-card" class="card">
+                <!--Card image-->
+                <img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%282%29.jpg" alt="Card image cap">
+                <!--Card content-->
+                <div class="card-body">
+                    <h4 class="card-title">{{ course.name }}</h4>
+                    <a href="/{{ user.name }}/{{ course.name }}" class="btn btn-primary">Submit Assignment</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
