@@ -36,4 +36,8 @@
         </form>
         <!--/Form without header-->
     </section>
+    <script type="text/javascript">
+        if("{{ loginError }}")
+            toastr.warning('Invalid username or password.');
+    </script>
 {% endblock %}
