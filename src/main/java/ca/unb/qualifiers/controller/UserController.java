@@ -25,7 +25,7 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping(value = {"/", "/signup"})
+    @GetMapping(value = "/")
     public String index(Model model, @RequestParam(value = "error", required = false) String error) {
         model.addAttribute("sign-in-form", new User());
         model.addAttribute("sign-up-form", new User());
@@ -35,22 +35,6 @@ public class UserController {
         }
 
         return "index";
-    }
-
-    /*@PostMapping(value = "/signup")
-    public String registration(@ModelAttribute("sign-up-form") User userForm, BindingResult bindingResult, Model model) {
-        userValidator.validate(userForm, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("accountCreationError", bindingResult.getFieldError().getCode());
-            model.addAttribute("accountType", userForm.getHasExtendedPrivileges() ? "Instructor" : "Student");
-            return "index";
-        }
-
-        userService.save(userForm);
-        securityService.autologin(userForm.getUsername(), userForm.getPasswordConfirm());
-
-        return "redirect:/" + userForm.getUsername();
     }
 
     @GetMapping(value = "/login/success")
@@ -65,7 +49,6 @@ public class UserController {
         }
         User user = userRepository.findByUsername(username);
         map.addAttribute("user", user);
-        map.addAttribute("courseList", user.getCourses());
         return "dashboard";
-    }*/
+    }
 }
